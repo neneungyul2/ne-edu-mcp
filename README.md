@@ -54,7 +54,7 @@
 `uvx --from git+...`로 실행 때마다 받으면, Claude Desktop이 서버를 여러 번 동시에 띄울 때 uv 캐시 쓰기가 겹쳐 시작에 실패할 수 있습니다. 터미널(Claude 밖)에서 한 번 설치하고 실행 파일을 직접 가리키세요.
 
 ```
-uv tool install --force "git+https://github.com/neneungyul2/ne-edu-open-api-mcp"
+uv tool install --force "git+https://github.com/neneungyul2/ne-neis-open-api-mcp"
 ```
 
 `%APPDATA%\Claude\claude_desktop_config.json`:
