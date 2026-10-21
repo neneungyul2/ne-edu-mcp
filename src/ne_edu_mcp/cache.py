@@ -68,7 +68,7 @@ class FileCache:
 def default_cache() -> FileCache:
     """환경변수 NEIS_CACHE_DIR, NEIS_CACHE_TTL_HOURS로 만든 캐시 (기본: 홈 폴더, 24시간)."""
     directory = os.environ.get("NEIS_CACHE_DIR", "").strip() or str(
-        Path.home() / ".ne-edu-open-api-mcp" / "cache"
+        Path.home() / ".ne-edu-mcp" / "cache"
     )
     try:
         hours = float(os.environ.get("NEIS_CACHE_TTL_HOURS", ""))

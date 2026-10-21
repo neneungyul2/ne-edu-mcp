@@ -401,7 +401,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ne-edu-open-api-mcp"
+name = "ne-edu-mcp"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

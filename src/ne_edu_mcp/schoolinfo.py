@@ -92,7 +92,7 @@ class Sido:
 
 
 def _data(name: str) -> Any:
-    text = resources.files("ne_edu_open_api_mcp").joinpath("data", name).read_text(encoding="utf-8")
+    text = resources.files("ne_edu_mcp").joinpath("data", name).read_text(encoding="utf-8")
     return json.loads(text)
 
 

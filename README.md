@@ -1,4 +1,4 @@
-# ne-edu-open-api-mcp
+# ne-edu-mcp
 
 교육 공공데이터 두 곳을 묶은 MCP(Model Context Protocol) 서버입니다.
 
@@ -62,8 +62,8 @@ uv tool install --force "git+https://github.com/neneungyul2/ne-edu-mcp"
 ```json
 {
   "mcpServers": {
-    "ne-edu-open-api": {
-      "command": "C:\\Users\\내이름\\.local\\bin\\ne-edu-open-api-mcp.exe",
+    "ne-edu": {
+      "command": "C:\\Users\\내이름\\.local\\bin\\ne-edu-mcp.exe",
       "args": [],
       "env": {
         "NEIS_API_KEY": "발급Key",
@@ -80,10 +80,10 @@ uv tool install --force "git+https://github.com/neneungyul2/ne-edu-mcp"
 ### Claude Code
 
 ```
-claude mcp add ne-edu-open-api -s user ^
+claude mcp add ne-edu -s user ^
   -e NEIS_API_KEY=발급Key -e SCHOOLINFO_API_KEY=발급Key ^
   -e NEIS_EXPORT_DIR=C:\Users\내이름\Documents\edu-exports ^
-  -- C:\Users\내이름\.local\bin\ne-edu-open-api-mcp.exe
+  -- C:\Users\내이름\.local\bin\ne-edu-mcp.exe
 ```
 
 (줄 끝 `^`는 Windows cmd의 줄 이음입니다. PowerShell은 `` ` ``, macOS/Linux는 `\`를 쓰세요.)
@@ -95,7 +95,7 @@ claude mcp add ne-edu-open-api -s user ^
 | `NEIS_API_KEY` | NEIS 인증키 (없으면 요청당 5건) | — |
 | `SCHOOLINFO_API_KEY` | 학교알리미 인증키 (없으면 학교알리미 조회·내보내기 불가) | — |
 | `NEIS_EXPORT_DIR` | 엑셀/CSV 저장 폴더. **지정을 권장합니다**(MCP 클라이언트가 서버를 실행하는 작업 폴더를 알 수 없어서) | `<작업 폴더>/exports` |
-| `NEIS_CACHE_DIR` | API 응답 캐시 폴더 (인증키는 저장하지 않음) | `<홈>/.ne-edu-open-api-mcp/cache` |
+| `NEIS_CACHE_DIR` | API 응답 캐시 폴더 (인증키는 저장하지 않음) | `<홈>/.ne-edu-mcp/cache` |
 | `NEIS_CACHE_TTL_HOURS` | 캐시 유지 시간(시간) | `24` |
 | `NEIS_TOOLS_ALLOW` | 노출할 도구 이름(쉼표 구분, 비우면 전체) | 전체 |
 
@@ -108,7 +108,7 @@ uv sync
 uv run pytest
 ```
 
-- `scripts/build_schoolinfo_data.py`: 학교알리미 공식 엑셀(`OpenAPI_Output.xlsx`, `sido_sggCode.xlsx`, https://www.schoolinfo.go.kr/download/)에서 `src/ne_edu_open_api_mcp/data/*.json`을 다시 만듭니다. 항목이 바뀌면 다시 실행하세요.
+- `scripts/build_schoolinfo_data.py`: 학교알리미 공식 엑셀(`OpenAPI_Output.xlsx`, `sido_sggCode.xlsx`, https://www.schoolinfo.go.kr/download/)에서 `src/ne_edu_mcp/data/*.json`을 다시 만듭니다. 항목이 바뀌면 다시 실행하세요.
 - 구조: `client.py`(NEIS) · `schoolinfo.py`(학교알리미 클라이언트·카탈로그) · `academy.py`·`school_service.py`(조회 서비스) · `tools/`(MCP 도구) · `export.py`·`cache.py`.
 
 ## 출처

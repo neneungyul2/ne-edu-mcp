@@ -15,7 +15,7 @@ from .schoolinfo import SchoolInfoClient
 from .tool_filter import ToolRegistrar, parse_tool_allow_list
 from .tools import register_all_tools
 
-SERVER_NAME = "ne-edu-open-api-mcp"
+SERVER_NAME = "ne-edu-mcp"
 
 
 def create_server(

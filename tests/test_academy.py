@@ -1,8 +1,8 @@
 import pytest
 
-from ne_edu_open_api_mcp.academy import AcademyService, build_predicate, normalize_row, parse_tuition
-from ne_edu_open_api_mcp.cache import FileCache
-from ne_edu_open_api_mcp.offices import resolve_office
+from ne_edu_mcp.academy import AcademyService, build_predicate, normalize_row, parse_tuition
+from ne_edu_mcp.cache import FileCache
+from ne_edu_mcp.offices import resolve_office
 
 from .helpers import RecordingNeis, neis_client, neis_row
 
