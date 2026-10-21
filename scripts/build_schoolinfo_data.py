@@ -10,7 +10,7 @@ from pathlib import Path
 
 import openpyxl
 
-OUT = Path(__file__).resolve().parent.parent / "src" / "ne_neis_open_api_mcp" / "data"
+OUT = Path(__file__).resolve().parent.parent / "src" / "ne_edu_open_api_mcp" / "data"
 
 
 def build_items(path: str) -> list[dict]:

@@ -1,6 +1,6 @@
 import pytest
 
-from ne_neis_open_api_mcp.client import ApiError, parse_academy_page
+from ne_edu_open_api_mcp.client import ApiError, parse_academy_page
 
 from .helpers import NEIS_BAD_KEY, NEIS_NO_DATA, RecordingNeis, neis_client, neis_ok, neis_row
 

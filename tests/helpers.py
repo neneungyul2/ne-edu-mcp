@@ -1,9 +1,9 @@
 """테스트용 가짜 응답과 서버 모음."""
 import httpx
 
-from ne_neis_open_api_mcp.client import NeisClient
-from ne_neis_open_api_mcp.schoolinfo import SchoolInfoClient
-from ne_neis_open_api_mcp.tool_filter import ToolRegistrar
+from ne_edu_open_api_mcp.client import NeisClient
+from ne_edu_open_api_mcp.schoolinfo import SchoolInfoClient
+from ne_edu_open_api_mcp.tool_filter import ToolRegistrar
 
 
 def neis_row(no: int, name: str, kind: str = "학원", status: str = "개원", zone: str = "강남구") -> dict:

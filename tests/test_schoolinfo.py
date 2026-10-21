@@ -1,9 +1,9 @@
 import httpx
 import pytest
 
-from ne_neis_open_api_mcp.client import ApiError
-from ne_neis_open_api_mcp.school_service import SchoolDisclosureService, resolve_fields, shape_rows
-from ne_neis_open_api_mcp.schoolinfo import (
+from ne_edu_open_api_mcp.client import ApiError
+from ne_edu_open_api_mcp.school_service import SchoolDisclosureService, resolve_fields, shape_rows
+from ne_edu_open_api_mcp.schoolinfo import (
     find_item,
     items,
     parse_response,

@@ -4,11 +4,11 @@ import httpx
 import pytest
 from mcp.server.mcpserver.exceptions import ToolError
 
-from ne_neis_open_api_mcp.academy import AcademyService
-from ne_neis_open_api_mcp.config import load_dotenv_if_present, resolve_api_key, resolve_schoolinfo_key
-from ne_neis_open_api_mcp.school_service import SchoolDisclosureService
-from ne_neis_open_api_mcp.tool_filter import parse_tool_allow_list
-from ne_neis_open_api_mcp.tools import register_all_tools
+from ne_edu_open_api_mcp.academy import AcademyService
+from ne_edu_open_api_mcp.config import load_dotenv_if_present, resolve_api_key, resolve_schoolinfo_key
+from ne_edu_open_api_mcp.school_service import SchoolDisclosureService
+from ne_edu_open_api_mcp.tool_filter import parse_tool_allow_list
+from ne_edu_open_api_mcp.tools import register_all_tools
 
 from .helpers import RecordingNeis, capture_registrar, neis_client, neis_row, school_client
 
