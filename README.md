@@ -7,7 +7,7 @@
 
 결과는 대화에서 바로 조회하거나, 엑셀(xlsx)과 CSV로 저장할 수 있습니다.
 
-## 도구 (9개)
+## 도구 (11개)
 
 | 구분 | 도구 | 인증키 |
 |---|---|---|
@@ -15,6 +15,8 @@
 | | `search_academies` (검색) | 권장* |
 | | `get_academy` (학원지정번호로 1곳) | 권장* |
 | | `export_academies` (xlsx/CSV 저장) | 필수 |
+| 영어 학원 판정 | `count_english_academies` (시도 하나, 시군구별 집계) | 필수 |
+| | `export_english_academies` (전국·여러 시도, 집계+명단 xlsx/CSV) | 필수 |
 | 학교알리미 | `list_school_disclosure_items` (공시 항목 35종과 apiType) | 불필요 |
 | | `describe_school_disclosure_item` (항목의 출력 필드) | 불필요 |
 | | `list_school_regions` (시도·시군구·학교급 코드) | 불필요 |
@@ -27,12 +29,30 @@
 
 - "서울 강남구 영어 학원 중 교습소만 찾아줘" → `search_academies(office="서울", zone="강남구", name="영어", kind="교습소")`
 - "경기도 성남시 영어 학원 전부 엑셀로" → `export_academies`
+- "전국 시군구별 영어 어학원 수와 비중을 엑셀로" → `export_english_academies()`
+- "부산 영어 어학원 비중" → `count_english_academies(office="부산")`
 - "서울 종로구 초등학교 전화번호와 홈페이지" → `get_school_disclosure(item="학교기본정보", sido="서울", sgg="종로구", school_kind="초등", fields=["전화번호", "홈페이지 주소"])`
 - "경기도 중학교 교복 단가를 엑셀로" → `export_school_disclosure(item="교복 구매 유형 및 단가", sido="경기", school_kinds=["중학교"])`
 
 ### NEIS 조회 조건
 
 서버가 거르는 조건: 시도교육청(필수), 행정구역(`zone`, 정확히 일치), 이름(`name`, 포함), 분야(`field`), 교습계열(`course_order`), 교습과정(`course`). 서버가 걸러주지 못하는 **구분(학원/교습소)·등록상태·교습과정목록**은 도구가 훑어서 거릅니다(최대 1만 건). 범위가 넓으면 결과에 `note`로 알려 주니 `zone`이나 `name`으로 먼저 좁히세요.
+
+### 영어 학원 판정 기준
+
+`count_english_academies`·`export_english_academies`는 아래 기준으로 판정합니다(코드: `src/ne_edu_mcp/english.py`). 기준을 바꾸면 이 표와 테스트(`tests/test_english.py`)를 함께 고칩니다.
+
+| 항목 | 기준 |
+|---|---|
+| 원칙 | 이름이 아니라 교육청 등록 정보(교습계열)를 먼저 본다. 이름은 등록 정보가 비었을 때와 영어/비영어를 가를 때만 쓴다. 학원과 교습소는 나눠 센다 |
+| 어학원 / 외국어 교습소 | 교습계열 '외국어'. 계열이 비면 분야 '국제화', 또는 분야 '종합(대)'이고 이름에 어학원·어학학원·외국어학원 |
+| 보습 영어학원 / 보습 영어 교습소 | 교습계열 '보통교과'(계열이 비면 분야 '입시.검정 및 보습'·'종합(대)')이고 이름에 영어·잉글리시·English·토익·토플·어학원·어학학원. 종합 보습학원은 잡히지 않아 최소치 |
+| 제외 | 성인 어학(교습계열 '국제'), 영어 외 외국어, 원격학원(이름에 '원격'·'온라인학원'), 외국어로 등록됐지만 이름이 다른 과목인 곳 |
+| 어학원 비중 | 어학원 ÷ (어학원 + 보습 영어학원 + 영어 교습소). 참고로 학원 중 어학원 비중, 어학원 계열 비중((어학원 + 외국어 교습소) ÷ 합계)도 낸다 |
+| 지역 | 도로명주소의 시도·시군구(일반구가 있는 시는 시로 묶음). 인천 2026년 개편 구, 대구 군위군, 전남광주통합특별시(자치구는 광주) 반영. 충남 연기군 옛 등록 제외 |
+| 중복 | 두 교육청에 같은 학원(학원지정번호+학원명)이 있으면 1건 |
+
+이름에 '영어'가 들어간 곳만 세면 'OO어학원'처럼 이름에 영어가 없는 어학원(전국 약 5천 곳)이 빠집니다.
 
 ### 학교알리미 참고
 
@@ -109,7 +129,7 @@ uv run pytest
 ```
 
 - `scripts/build_schoolinfo_data.py`: 학교알리미 공식 엑셀(`OpenAPI_Output.xlsx`, `sido_sggCode.xlsx`, https://www.schoolinfo.go.kr/download/)에서 `src/ne_edu_mcp/data/*.json`을 다시 만듭니다. 항목이 바뀌면 다시 실행하세요.
-- 구조: `client.py`(NEIS) · `schoolinfo.py`(학교알리미 클라이언트·카탈로그) · `academy.py`·`school_service.py`(조회 서비스) · `tools/`(MCP 도구) · `export.py`·`cache.py`.
+- 구조: `client.py`(NEIS) · `english.py`(영어 학원 판정·지역 정리) · `schoolinfo.py`(학교알리미 클라이언트·카탈로그) · `academy.py`·`school_service.py`(조회 서비스) · `tools/`(MCP 도구) · `export.py`·`cache.py`.
 
 ## 출처
 

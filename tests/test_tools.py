@@ -14,6 +14,7 @@ from .helpers import RecordingNeis, capture_registrar, neis_client, neis_row, sc
 
 ALL = {
     "list_education_offices", "search_academies", "get_academy", "export_academies",
+    "count_english_academies", "export_english_academies",
     "list_school_disclosure_items", "describe_school_disclosure_item", "list_school_regions",
     "get_school_disclosure", "export_school_disclosure",
 }
@@ -34,7 +35,7 @@ def build(neis_rows=None, key="k", school_rows=None, allow=None):
     return server.tools, rec
 
 
-def test_registers_all_nine_tools_with_korean_descriptions():
+def test_registers_all_tools_with_korean_descriptions():
     registrar, server = capture_registrar()
     register_all_tools(registrar, None, None)
     assert set(server.tools) == ALL

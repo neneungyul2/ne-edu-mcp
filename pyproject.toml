@@ -1,6 +1,6 @@
 [project]
 name = "ne-edu-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "NEIS 교육정보 개방 포털 MCP server: 학원·교습소 정보 조회와 엑셀/CSV 내보내기"
 readme = "README.md"
 requires-python = ">=3.11"
